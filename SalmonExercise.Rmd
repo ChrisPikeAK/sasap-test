@@ -1,0 +1,87 @@
+---
+title: "Escapeement Goals Evaluation Exercise"
+author: "Chris Pike"
+date: "October 17, 2018"
+output: html_document
+---
+
+##Download Libraries
+
+```{r,warning=F, message=F}
+library(dplyr)
+library(tidyr)
+library(DT)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# prepare daily escapment data
+
+Daily data sourced from [Andrew Munro and Eric Volk. 2017. Summary of Pacific Salmon Escapement Goals in Alaska with a Review of Escapements from 2007 to 2015. Knowledge Network for Biocomplexity. doi:10.5063/F1TQ5ZRG.](doi:10.5063/F1TQ5ZRG)
+
++ filter for Bristol Bay Sockeye
++ summarize by year, calculating total count
+
+```{r}
+escapement_counts = read.csv(url("https://knb.ecoinformatics.org/knb/d1/mn/v2/object/urn%3Auuid%3Af119a05b-bbe7-4aea-93c6-85434dcb1c5e",method = "libcurl"),
+                    stringsAsFactors = FALSE)
+head(escapement_counts)
+#unique(escapement_counts$SASAP.Region)
+```
+
+```{r}
+escapement_BB_Sockeye <- escapement_counts %>% 
+  #filter for only Bristol Bay Sockeye
+  filter(SASAP.Region == "Bristol Bay", Species == "Sockeye")
+  head(escapement_BB_Sockeye)
+
+```
+
+```{r}
+escapement_BB_Sockeye_cleaned <- escapement_BB_Sockeye %>% 
+  #get rid of unnecesary columns
+  select(Location, sampleDate, DailyCount) %>% 
+  separate(sampleDate, c("year", "month", "day"), sep = "-") %>% 
+  group_by(Location, year) %>% 
+  summarise(escapement = sum(DailyCount))
+tail(escapement_BB_Sockeye_cleaned)
+```
+
+```{r}
+
+
+```
+
+
+
+```{r}
+escapement_goals = read.csv(url("https://knb.ecoinformatics.org/knb/d1/mn/v2/object/knb.92014.1",method = "libcurl"),
+                    stringsAsFactors = FALSE)
+head(escapement_goals)
+#unique(escapement_goals$Region)
+```
+
+```{r}
+BB_sockeye_goals <- escapement_goals %>%
+  filter(Species == "Sockeye", Region == "Bristol Bay") %>% 
+  mutate(Lower = as.numeric(Lower), Initial.Year = as.numeric(Initial.Year))
+  #unique(BB_sockeye_goals$Region)
+head(BB_sockeye_goals)
+  
+  
+  
+  
+```
+```{r}
+#join the tables
+
+
+```
+
+
+
+# prepare escapement goals data
+
+# Evaluate escapement goals

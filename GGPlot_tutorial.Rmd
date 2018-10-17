@@ -1,0 +1,51 @@
+---
+title: "GGPlotTutorial"
+author: "Chris Pike"
+date: "October 17, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#load example data
+Load data from the KNB generating plots
+
+```{r}
+suppressPackageStartupMessages({
+  library(ggplot2)
+  library(tidyr)
+  library(dplyr)
+  library(DT)
+})
+
+# https://knb.ecoinformatics.org/#view/urn:uuid:e05865d7-678d-4513-9061-2ab7d979f8e7
+# Search 'permit value'
+permits <- read.csv(url("https://knb.ecoinformatics.org/knb/d1/mn/v2/object/urn%3Auuid%3Aa3c58bd6-481e-4c64-aa93-795df10a4664", method = "libcurl"),
+                    stringsAsFactors = FALSE)
+datatable(permits)
+```
+#start exploring GG Plot
+```{r}
+ggplot(permits,aes(x=Value, y = StdDev, color = Region, shape = Gear)) +
+  geom_point(color = blue)
+```
+```{r}
+ggplot(permits,aes(x=Value, y = StdDev, shape = Gear)) +
+  geom_point(color = 'blue')
+```
+
+```{r}
+ggplot(permits, aes(x=Gear, y = Value)) +
+  geom_boxplot()
+```
+
+```{r}
+mytheme <- theme_bw() +
+  theme(legend.title = element_blank())
+```
+
+
+
+
