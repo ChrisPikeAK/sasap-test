@@ -1,7 +1,11 @@
 # sasap-test
-TEst gitHub Training at SASAP
-##Heading 2
+Test gitHub Training at SASAP
+
+## Heading 2
 These changes were made on GitHub
 
-##Heading 3
+## Heading 3
 These changes were made in RStudio
+
+## This is Jorge's Header
+;)
