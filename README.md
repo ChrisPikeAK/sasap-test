@@ -8,4 +8,4 @@ This is a change to line 6
 These changes were made in RStudio
 
 ## This is Jorge's Header
-;)
+This was changed by Jorge.
